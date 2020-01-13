@@ -88,7 +88,14 @@ using IConsole;
 
 ## Pre-built battle hardened thread safe implementations of IConsole, for live, and for testing
 
-Please take a look at [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole) project which has a pre-built `MockConsole` as well as a full suite of Console library utilities, Box, Forms, ProgressBar, Windows and more that are all `IConsole` compatible.
+Please take a look at [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole) https://github.com/goblinfactory/konsole project which has pre-built
+
+- `ConcurrentWriter() : IConsole`
+- `NullWriter() : IConsole` 
+- `Window() : IConsole`
+- `MockConsole() : IConsole` 
+
+.. as well as a full suite of Console library utilities, Box, Forms, ProgressBar, Windows and more that are all `IConsole` compatible.
 
 * https://github.com/goblinfactory/konsole
 
