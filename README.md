@@ -139,7 +139,8 @@ public interface IConsole :
     IConsoleState, 
     IScrolling, 
     ISetColors, 
-    IPrintAtColor  { }
+    IPrintAtColor,
+    IWindowed  { }
 ```
 
 ## IWrite vs IConsole

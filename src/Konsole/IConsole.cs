@@ -1,5 +1,5 @@
 ﻿namespace Konsole
 {
 
-    public interface IConsole : IWrite, IWriteColor, IPrintAt, IConsoleState, IScrolling, ISetColors, IPrintAtColor  { }
+    public interface IConsole : IWrite, IWriteColor, IPrintAt, IConsoleState, IScrolling, ISetColors, IPrintAtColor, IWindowed  { }
 }   
