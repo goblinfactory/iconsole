@@ -6,7 +6,7 @@
     <Title>IConsole</Title>
     <AssemblyName>Konsole.IConsole</AssemblyName>
     <RootNamespace>Konsole</RootNamespace>
-    <Version>0.4-alpha</Version>
+    <Version>0.5-alpha</Version>
     <Owners>Goblinfactory Ltd</Owners>
     <Company>Goblinfactory Ltd</Company>
     <Authors>Alan Hemmings</Authors>
@@ -21,7 +21,7 @@
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/goblinfactory/iconsole/</RepositoryUrl>
-    <PackageReleaseNotes>try splitting the interfaces. (this is a test only, do not use)</PackageReleaseNotes>
+    <PackageReleaseNotes>update.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <None Include="iconsole.png" Pack="true" Visible="false" PackagePath="" />
