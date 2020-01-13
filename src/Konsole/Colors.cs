@@ -1,11 +1,12 @@
 ﻿using System;
+using static System.ConsoleColor;
 
 namespace Konsole
 {
     public class Colors
     {
-        public ConsoleColor Foreground { get; } = ConsoleColor.White;
-        public ConsoleColor Background { get; } = ConsoleColor.Black;
+        public ConsoleColor Foreground { get; } = White;
+        public ConsoleColor Background { get; } = Black;
 
         public Colors()
         {
@@ -18,13 +19,11 @@ namespace Konsole
             Background = background;
         }
 
-
-
         public static Colors WhiteOnBlack
         {
             get
             {
-                return new Colors(ConsoleColor.Gray, ConsoleColor.Black);
+                return new Colors(Gray, Black);
             }
         }
 
@@ -32,7 +31,7 @@ namespace Konsole
         {
             get
             {
-                return new Colors(ConsoleColor.Black, ConsoleColor.Gray);
+                return new Colors(Black, Gray);
             }
         }
     }

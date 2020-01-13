@@ -14,90 +14,118 @@ It's not about writing a wrapper, that is very easy. It's about setting a standa
 
 You can use `IConsole` as simply as typing, `add package IConsole`. You can always come back later and remove it. 
 
-## IWrite
+## How to use this library?
 
+Pick the narrowest set of features that the class that you are refactoring depends on. 
+
+Logging, printing only? `IWrite`, Needs to print in color? `IWriteColor`, Need to change the cursor position when printing? `IPrintAt`, eed to scroll portions of the screen? `IScrolling`, Need all of the above? `IConsole`.
+
+Need only 2, e.g. printing only (no color) and printing at? Then use interface inheritance and implement just the bits you need. For example. 
 
 ```csharp
 
-    public interface IWrite
-    {
-        void WriteLine(string format, params object[] args);  
-        void WriteLine(string text);
-        void Write(string format, params object[] args);
-        void Write(string text);
-    }
+public interface IPrint : IWrite, IPrintAt { }
+
+public class MyClass {
+    public MyClass(IPrint print) { ...}
+    ...
+    _print.PrintAt(0, 60, $"Total {total}");
+}
 ```
+
+# Interfaces
+
+## IWrite
+
+Typically use for Logging and printing only. Nothing fancy, just writing something out the console or the build output.
+
+- `void WriteLine(string format, params object[] args);`
+- `void WriteLine(string text);`
+- `void Write(string format, params object[] args);`
+- `void Write(string text);`
+- `void Clear();`
 
 ## IWriteColor
 
+If you need to print in color. 
+
+- `void Write(ConsoleColor color, string format, params object[] args);`
+- `void Write(ConsoleColor color, string text);`
+- `void WriteLine(ConsoleColor color, string format, params object[] args);`
+- `void WriteLine(ConsoleColor color, string text);`
+- `void Clear(ConsoleColor? backgroundColor);`
+
+## IPrintAt
+
+Interface for a class that needs to print at a specific location in a window. 
+
+- `void PrintAt(int x, int y, string format, params object[] args);`
+- `void PrintAt(int x, int y, string text);`
+- `void PrintAt(int x, int y, char c);`
+- `void PrintAtColor(ConsoleColor foreground, int x, int y, string text, ConsoleColor? background);`
+- `int WindowWidth { get; }`
+- `int WindowHeight { get; }`
+
+## Scrolling
+
+Interface for a class that needs to be able to scroll portions of the screen. This will most likely cause your library to require platform specific implementations for scrolling.
+
+- `void MoveBufferArea(int sourceLeft, int sourceTop, int sourceWidth, int sourceHeight, int targetLeft, int targetTop, char sourceChar, ConsoleColor sourceForeColor, ConsoleColor sourceBackColor);`
+- `void ScrollDown();`
+
+## IWindowed
+
+If you are writing a windowing library like `Konsole` then each window region needs to report back an AbsoluteX and AbsoluteY position so that printing can happen at the correct (relative) position on the real console.
+
+- `int AbsoluteX { get; }`
+- `int AbsoluteY { get; }`
+
+## IConsoleState
+
+Interface for all the console methods that are most at risk of causing corruptions in multithreaded programs. The way to protect against corruption is to manage locking and manually save and restore state.
+
+- `ConsoleState State { get; set; }`
+- `int CursorTop { get; set; }`
+- `int CursorLeft { get; set; }`
+- `void DoCommand(IConsole console, Action action);`
+- `ConsoleColor ForegroundColor { get; set; }`
+- `ConsoleColor BackgroundColor { get; set; }`
+- `bool CursorVisible { get; set; }`
+
+#### DoCommand
+
+`void DoCommand(IConsole console, Action action)`
+
+Runs an action that may or may not modify the console state that can cause corruptions when thread context swaps. Must lock on a static locker, do try catch, and ensure state is back to what it was before the command ran. If you're not writing a threadsafe control or threading is not an issue, then you can simply call `action()` in your implementation.
+
+example implementation;
+
 ```csharp
-    public interface IWriteColor
+  lock(_locker)
+  {
+    var state = console.State;
+    try
     {
-        /// <summary>
-        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
-        /// </summary>
-        void Write(ConsoleColor color, string format, params object[] args);
-
-        /// <summary>
-        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
-        /// </summary>
-        void Write(ConsoleColor color, string text);
-
-        /// <summary>
-        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
-        /// </summary>
-        void WriteLine(ConsoleColor color, string format, params object[] args);
-
-        /// <summary>
-        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
-        /// </summary>
-        void WriteLine(ConsoleColor color, string text);
-
+      action();
     }
+    finally
+    {
+      console.State = state;</code>
+    }
+  }
 ```
 
 ## IConsole
 
-```csharp
-    public interface IConsole : IWrite, IWriteColor
-    {
-        ConsoleState State { get; set; }
-        /// <summary>
-        /// The absolute X position this window is located on the real or root console. This is where relative x:0 starts from for this window.
-        /// </summary>
-        int AbsoluteX { get; }
-
-        /// <summary>
-        /// The absolute Y position this window is located on the real or root console. This is where relative y:0 starts from for this window.
-        /// </summary>
-        int AbsoluteY { get; }
-
-        int WindowWidth { get; }
-        int WindowHeight { get; }
-        int CursorTop { get; set; }
-        int CursorLeft { get; set; }
-        Colors Colors { get; set; }
-        void DoCommand(IConsole console, Action action);
-        ConsoleColor ForegroundColor { get; set; }
-        ConsoleColor BackgroundColor { get; set; }
-        bool CursorVisible { get; set; }
-        void PrintAt(int x, int y, string format, params object[] args);
-        void PrintAt(int x, int y, string text);
-        void PrintAt(int x, int y, char c);
-        void PrintAtColor(ConsoleColor foreground, int x, int y, string text, ConsoleColor? background);
-        void ScrollDown();
-        void Clear();
-        void Clear(ConsoleColor? backgroundColor);
-
-        void MoveBufferArea(int sourceLeft, int sourceTop, int sourceWidth, int sourceHeight, int targetLeft,
-            int targetTop, char sourceChar, ConsoleColor sourceForeColor, ConsoleColor sourceBackColor);
-    }
+This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt`
 
 ```
+public interface IConsole : IWrite, IWriteColor, IPrintAt, IConsoleState, IScrolling  { }
+```
+
 ## IWrite vs IConsole
 
-If the app you are refactoring does not set the cursor position, and merely "writes" out via `System.Console` then use the `IWrite` interface as your dependancy. IWrite is good enough for 99% of `System.Console` refactorings, where you're essentially just logging stuff to the console.
-
+If the app you are refactoring does not set the cursor position, and merely "writes" out via `System.Console` then use the `IWrite` interface as your dependancy. IWrite is good enough for 99% of `System.Console` refactorings, where you're essentially just logging stuff to the console. 
 
 ## Getting Started
 
@@ -172,7 +200,7 @@ using Konsole;
 ```
 
 
-## Pre-built battle hardened thread safe implementations of IConsole, for live, and for testing
+## Pre-built battle hardened thread safe implementations for production and testing uses
 
 Please take a look at [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole) https://github.com/goblinfactory/konsole project which has pre-built
 

@@ -11,5 +11,6 @@ namespace Konsole
         void Write(string format, params object[] args);
 
         void Write(string text);
+        void Clear();
     }
 }

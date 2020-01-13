@@ -24,5 +24,6 @@ namespace Konsole
         /// </summary>
         void WriteLine(ConsoleColor color, string text);
 
+        void Clear(ConsoleColor? backgroundColor);
     }
 }

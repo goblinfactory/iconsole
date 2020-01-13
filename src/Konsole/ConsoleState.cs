@@ -10,7 +10,7 @@ namespace Konsole
         public ConsoleColor ForegroundColor { get; set; }
         public ConsoleColor BackgroundColor { get; set; }
 
-        public ConsoleState(ConsoleColor foreground, ConsoleColor background, int x, int y, bool cursorVisible) // NB always X then Y .. need to swap these around
+        public ConsoleState(ConsoleColor foreground, ConsoleColor background, int x, int y, bool cursorVisible)
         {
             ForegroundColor = foreground;
             BackgroundColor = background;
