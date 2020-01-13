@@ -8,13 +8,15 @@
 
 As used by [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole). (https://github.com/goblinfactory/konsole) The home of `ProgressBar`, `Window`, `Form` and `Drawing`.
 
-## But I can write my own System.Console wrapper, it's takes less than 40 lines? 
+If you have any questions about how to use this package, please join the discussion on our gitter group at : https://gitter.im/goblinfactory-konsole/community
+
+## But I can write my own System.Console wrapper, it will be done in less than 40 lines? 
 
 It's not about writing a wrapper, that is very easy. It's about setting a standard of interoperability between everyone that uses this as their interface. Since you would have started by writing your own interface, and then also writing something that implements that interface, why not save yourself the 2 or 3 hours you will be sidetracked doing that and dive right in to cleaning up your code.
 
 You can use `IConsole` as simply as typing, `add package IConsole`. You can always come back later and remove it. 
 
-## How to use this library?
+## How to use IConsole?
 
 Pick the narrowest set of features that the class that you are refactoring depends on. 
 
