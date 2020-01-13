@@ -2,7 +2,7 @@
 
 namespace Konsole
 {
-    public interface IConsoleState
+    public interface IConsoleState : ISetColors
     {
         ConsoleState State { get; set; }
         int CursorTop { get; set; }
@@ -29,8 +29,6 @@ namespace Konsole
         ///    }
         ///  }</example>
         void DoCommand(IConsole console, Action action);
-        ConsoleColor ForegroundColor { get; set; }
-        ConsoleColor BackgroundColor { get; set; }
 
         bool CursorVisible { get; set; }
     }

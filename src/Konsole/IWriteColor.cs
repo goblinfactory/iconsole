@@ -2,7 +2,7 @@
 
 namespace Konsole
 {
-    public interface IWriteColor
+    public interface IWriteColor : ISetColors
     {
         /// <summary>
         /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.

@@ -45,7 +45,16 @@ Typically use for Logging and printing only. Nothing fancy, just writing somethi
 - `void Write(string text);`
 - `void Clear();`
 
-## IWriteColor
+## ISetColors
+
+Change the foreground and background color of what will get printed with the next Write, or WriteLine command.
+
+- `ConsoleColor ForegroundColor { get; set; }`
+- `ConsoleColor BackgroundColor { get; set; }`
+
+## IWriteColor 
+
+`public interface IWriteColor : ISetColors`
 
 If you need to print in color. 
 
@@ -62,11 +71,14 @@ Interface for a class that needs to print at a specific location in a window.
 - `void PrintAt(int x, int y, string format, params object[] args);`
 - `void PrintAt(int x, int y, string text);`
 - `void PrintAt(int x, int y, char c);`
-- `void PrintAtColor(ConsoleColor foreground, int x, int y, string text, ConsoleColor? background);`
 - `int WindowWidth { get; }`
 - `int WindowHeight { get; }`
 
-## Scrolling
+## IPrintAtColor
+
+- `void PrintAtColor(ConsoleColor foreground, int x, int y, string text, ConsoleColor? background);`
+
+## IScrolling
 
 Interface for a class that needs to be able to scroll portions of the screen. This will most likely cause your library to require platform specific implementations for scrolling.
 
@@ -117,10 +129,17 @@ example implementation;
 
 ## IConsole
 
-This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt`
+This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt`or `IPrintAtColor`
 
 ```
-public interface IConsole : IWrite, IWriteColor, IPrintAt, IConsoleState, IScrolling  { }
+public interface IConsole : 
+    IWrite, 
+    IWriteColor, 
+    IPrintAt, 
+    IConsoleState, 
+    IScrolling, 
+    ISetColors, 
+    IPrintAtColor  { }
 ```
 
 ## IWrite vs IConsole

@@ -6,7 +6,7 @@
     <Title>IConsole</Title>
     <AssemblyName>Konsole.IConsole</AssemblyName>
     <RootNamespace>Konsole</RootNamespace>
-    <Version>0.3-alpha</Version>
+    <Version>0.4-alpha</Version>
     <Owners>Goblinfactory Ltd</Owners>
     <Company>Goblinfactory Ltd</Company>
     <Authors>Alan Hemmings</Authors>
