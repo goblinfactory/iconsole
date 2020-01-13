@@ -39,12 +39,12 @@ public class Accounts
 > install-package IConsole
 
 3. Create your own live and  test stubb, Mock or fake that implements `IConsole`.
-4. Refactor your code to use the  `IConsole` abstraction. 
+4. Refactor your code to use the  `IConsole` abstraction. `IConsole` uses `Konsole` as the parent namespace. 
 
 
 ```csharp
 
-using IConsole; 
+using Konsole; 
 
 public class Accounts
 {
@@ -68,7 +68,7 @@ public class Accounts
 
 ```csharp
 
-using IConsole; 
+using Konsole; 
 
     [Test]
     public void doing_something_to_invoices_must_print_the_invoice_details_to_the_console()
