@@ -51,6 +51,21 @@ Change the foreground and background color of what will get printed with the nex
 
 - `ConsoleColor ForegroundColor { get; set; }`
 - `ConsoleColor BackgroundColor { get; set; }`
+- `Colors Colors { get; set; }`
+
+#### Setting Colors
+
+Set the foreground and background color in a single threadsafe way. i.e. locks using a static locker before setting the individual ForegroundColor and BackgroundColor properties. Colors is a syntactic shortcut for getting or setting both the Foreground and Background color in a single assignment. For example
+
+calling 
+```
+console.Colors = new Colors(Red, White);
+```
+must be implemented such that it is the same as having called 
+```
+console.ForegroundColor = Red; 
+console.BackgroundColor = White;
+```
 
 ## IWriteColor 
 
