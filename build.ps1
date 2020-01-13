@@ -1,6 +1,6 @@
 write-host "-------------------------------"
-write-host "IConsole"
+write-host "Konsole.IConsole"
 write-host "-------------------------------"
 
-dotnet build src/IConsole.sln --configuration Release
+dotnet build src/Konsole.sln --configuration Release
 

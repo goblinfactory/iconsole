@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IConsole
+namespace Konsole
 {
     public class ConsoleState
     {
