@@ -14,6 +14,91 @@ It's not about writing a wrapper, that is very easy. It's about setting a standa
 
 You can use `IConsole` as simply as typing, `add package IConsole`. You can always come back later and remove it. 
 
+## IWrite
+
+
+```csharp
+
+    public interface IWrite
+    {
+        void WriteLine(string format, params object[] args);  
+        void WriteLine(string text);
+        void Write(string format, params object[] args);
+        void Write(string text);
+    }
+```
+
+## IWriteColor
+
+```csharp
+    public interface IWriteColor
+    {
+        /// <summary>
+        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
+        /// </summary>
+        void Write(ConsoleColor color, string format, params object[] args);
+
+        /// <summary>
+        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
+        /// </summary>
+        void Write(ConsoleColor color, string text);
+
+        /// <summary>
+        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
+        /// </summary>
+        void WriteLine(ConsoleColor color, string format, params object[] args);
+
+        /// <summary>
+        /// writes out to the console using the requested color, resetting the color back to the console afterwards. Implementor Should be threadsafe.
+        /// </summary>
+        void WriteLine(ConsoleColor color, string text);
+
+    }
+```
+
+## IConsole
+
+```csharp
+    public interface IConsole : IWrite, IWriteColor
+    {
+        ConsoleState State { get; set; }
+        /// <summary>
+        /// The absolute X position this window is located on the real or root console. This is where relative x:0 starts from for this window.
+        /// </summary>
+        int AbsoluteX { get; }
+
+        /// <summary>
+        /// The absolute Y position this window is located on the real or root console. This is where relative y:0 starts from for this window.
+        /// </summary>
+        int AbsoluteY { get; }
+
+        int WindowWidth { get; }
+        int WindowHeight { get; }
+        int CursorTop { get; set; }
+        int CursorLeft { get; set; }
+        Colors Colors { get; set; }
+        void DoCommand(IConsole console, Action action);
+        ConsoleColor ForegroundColor { get; set; }
+        ConsoleColor BackgroundColor { get; set; }
+        bool CursorVisible { get; set; }
+        void PrintAt(int x, int y, string format, params object[] args);
+        void PrintAt(int x, int y, string text);
+        void PrintAt(int x, int y, char c);
+        void PrintAtColor(ConsoleColor foreground, int x, int y, string text, ConsoleColor? background);
+        void ScrollDown();
+        void Clear();
+        void Clear(ConsoleColor? backgroundColor);
+
+        void MoveBufferArea(int sourceLeft, int sourceTop, int sourceWidth, int sourceHeight, int targetLeft,
+            int targetTop, char sourceChar, ConsoleColor sourceForeColor, ConsoleColor sourceBackColor);
+    }
+
+```
+## IWrite vs IConsole
+
+If the app you are refactoring does not set the cursor position, and merely "writes" out via `System.Console` then use the `IWrite` interface as your dependancy. IWrite is good enough for 99% of `System.Console` refactorings, where you're essentially just logging stuff to the console.
+
+
 ## Getting Started
 
 1. Find code that writes to the `System.Console` directly. Do a grep search for `Console.*` to get started.
@@ -85,6 +170,7 @@ using Konsole;
     }
 
 ```
+
 
 ## Pre-built battle hardened thread safe implementations of IConsole, for live, and for testing
 
