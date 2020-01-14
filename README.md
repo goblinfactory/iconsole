@@ -1,5 +1,7 @@
 # IConsole
 
+## Draft for discussion proposal, call for review
+
 [![nuget](https://img.shields.io/nuget/dt/IConsole.svg)](https://www.nuget.org/packages/IConsole/) 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
 [![Join the chat at https://gitter.im/goblinfactory-konsole/community](https://badges.gitter.im/goblinfactory-konsole/community.svg)](https://gitter.im/goblinfactory-konsole/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -20,11 +22,11 @@ You can use `IConsole` as simply as typing, `add package IConsole`. You can alwa
 
 This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt` or `IPrintAtColor`
 
-<img src='docs/iconsole-api.png' align='center' />
-
 ```csharp
  public interface IConsole : IPrintAtColor, IConsoleState, IWriteColor, IScrollingWindow { }
 ```
+
+<img src='docs/iconsole2.png' align='center' />
 
 ## IWrite vs IConsole
 
@@ -72,6 +74,44 @@ Change the foreground and background color of what will get printed with the nex
 - `ConsoleColor ForegroundColor { get; set; }`
 - `ConsoleColor BackgroundColor { get; set; }`
 - `Colors Colors { get; set; }`
+
+## Colors (class, not interface!)
+
+The eagle eyed amongst you will have spotted the single class file in this contract. Being able to specify the colors for something with a single assignment makes a lot of code easier to read. 
+
+```csharp
+myFoo.ForeGroundColor = System.ConsoleColor.Red;
+myFoo.BackgroundColor = System.ConsoleColor.White;
+
+vs
+
+myFoo.Colors = MyStaticThemes.Default;
+```
+also, if you're writing Threadsafe code, then you'll be saving and restoring colors a lot.
+
+```csharp
+  lock(_staticLocker)
+  {
+    try
+    {
+      var currentColors = myFoo.Colors;
+      myFoo.Colors = MyTheme.Highlighted;
+      myFoo.WriteLine("I am highlighted item");
+    }
+    finally
+    {
+        myFoo.Colors = currentColors;
+    }
+  }
+}
+```
+In fact, the pattern above is such a common pattern that the interface `IConsoleState` includes a dedicated method just for your implementation of that threadsafe pattern `void DoCommand(IConsole console, Action action);` the above code then becomes
+```csharp
+  myFoo.DoCommand(()=> {
+    MyFoo.Colors = MyTheme.Highlited;
+    myFoo.WriteLine("I am highlighted");
+  );
+```
 
 #### Setting Colors
 
