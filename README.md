@@ -16,6 +16,10 @@ It's not about writing a wrapper, that is very easy. It's about setting a standa
 
 You can use `IConsole` as simply as typing, `add package IConsole`. You can always come back later and remove it. 
 
+## Project Status
+
+- **The project is in currently only at alpha concept stage** (i.e. pre-beta), meaning that the final interface contracts are still being finalised and may change with the final version. The ink on this project is still only a few days wet. I have not yet migrated `Goblinfactory.Konsole` over to using the new contracts yet. As soon as that's done I'll release the first version `1.0.0-alpha` do some testing, and then remove the alpha status. 
+
 ## How to use IConsole?
 
 Pick the narrowest set of features that the class that you are refactoring depends on. 

@@ -11,5 +11,9 @@
         /// The absolute Y position this window is located on the real or root console. This is where relative y:0 starts from for this window.
         /// </summary>
         int AbsoluteY { get; }
+
+        int WindowWidth { get; }
+        int WindowHeight { get; }
+
     }
 }   
