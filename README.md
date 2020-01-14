@@ -10,7 +10,7 @@
 
 As used by [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole). (https://github.com/goblinfactory/konsole) The home of `ProgressBar`, `Window`, `Form` and `Drawing`.
 
-If you have any questions about how to use this package, please join the discussion on our gitter group at : https://gitter.im/goblinfactory-konsole/community
+The hope for this project is that it will enable interoperability between open source console library and app developers. If you have any questions about how to use this package, please join the discussion on our gitter group at : https://gitter.im/goblinfactory-konsole/community or contact me directly.
 
 ## But I can write my own System.Console wrapper, it will be done in less than 40 lines? 
 
