@@ -16,9 +16,23 @@ It's not about writing a wrapper, that is very easy. It's about setting a standa
 
 You can use `IConsole` as simply as typing, `add package IConsole`. You can always come back later and remove it. 
 
+## IConsole
+
+This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt` or `IPrintAtColor`
+
+<img src='docs/iconsole-api.png' align='center' />
+
+```csharp
+ public interface IConsole : IPrintAtColor, IConsoleState, IWriteColor, IScrollingWindow { }
+```
+
+## IWrite vs IConsole
+
+If the app you are refactoring does not set the cursor position, and merely "writes" out via `System.Console` then use the `IWrite` interface as your dependancy. IWrite is good enough for 99% of `System.Console` refactorings, where you're essentially just logging stuff to the console. 
+
 ## Project Status
 
-- **The project is in currently only at alpha concept stage** (i.e. pre-beta), meaning that the final interface contracts are still being finalised and may change with the final version. The ink on this project is still only a few days wet. I have not yet migrated `Goblinfactory.Konsole` over to using the new contracts yet. As soon as that's done I'll release the first version `1.0.0-alpha` do some testing, and then remove the alpha status. 
+- **The project is in currently only at alpha concept stage** (i.e. pre-beta and inviting discussion before it get's released as official version 1.0), meaning that the final interface contracts are still being finalised and may change with the final version. The ink on this project is still only a few days wet. I have not yet migrated `Goblinfactory.Konsole` over to using the new contracts yet. As soon as that's done I'll release the first version `1.0.0-alpha` do some testing, and then remove the alpha status. 
 
 ## How to use IConsole?
 
@@ -148,26 +162,6 @@ example implementation;
   }
 ```
 
-## IConsole
-
-This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt`or `IPrintAtColor`
-
-```
-public interface IConsole : 
-    IWrite, 
-    IWriteColor, 
-    IPrintAt, 
-    IConsoleState, 
-    IScrolling, 
-    ISetColors, 
-    IPrintAtColor,
-    IWindowed  { }
-```
-
-## IWrite vs IConsole
-
-If the app you are refactoring does not set the cursor position, and merely "writes" out via `System.Console` then use the `IWrite` interface as your dependancy. IWrite is good enough for 99% of `System.Console` refactorings, where you're essentially just logging stuff to the console. 
-
 ## Getting Started
 
 1. Find code that writes to the `System.Console` directly. Do a grep search for `Console.*` to get started.
@@ -250,9 +244,11 @@ Please take a look at [`Goblinfactory.Konsole`](https://github.com/goblinfactory
 - `Window() : IConsole`
 - `MockConsole() : IConsole` 
 
+* https://github.com/goblinfactory/konsole
+
 .. as well as a full suite of Console library utilities, Box, Forms, ProgressBar, Windows and more that are all `IConsole` compatible.
 
-* https://github.com/goblinfactory/konsole
+**NB! `IConsole` is being lifted out from `Goblinfactory.Konsole` so as of today (14 Jan 2020) it technically does not yet implement the interface, but will, within a day or two as soon as version `1.0` is released via nuget.org.
 
 ## Other libraries using IConsole
 
