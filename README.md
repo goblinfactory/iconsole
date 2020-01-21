@@ -1,8 +1,15 @@
 # IConsole
 
+## Update 21 Jan 2020
+
+This project is no longer supported. IConsole is included in `Goblinfactory.Konsole`. Please checkout the project at [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole).
+
+--- old documentation for IConsole is below, these class designs will be available in `Goblinfactory.Konsole` from version 6 onwards. 
+
 ## Draft for discussion proposal, call for review
 
 [![nuget](https://img.shields.io/nuget/dt/IConsole.svg)](https://www.nuget.org/packages/IConsole/) 
+[![NuGet Status](https://img.shields.io/nuget/v/IConsole.svg?label=IConsole)](https://www.nuget.org/packages/IConsole/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) 
 [![Join the chat at https://gitter.im/goblinfactory-konsole/community](https://badges.gitter.im/goblinfactory-konsole/community.svg)](https://gitter.im/goblinfactory-konsole/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -24,8 +31,11 @@ You can use `IConsole` as simply as typing, `add package IConsole`. You can alwa
 
 This is the sum of all interfaces. It will require the most work to implement. Typically you often only need `IWrite` and-or  `IPrintAt` or `IPrintAtColor`
 
-```csharp
- public interface IConsole : IPrintAtColor, IConsoleState, IWriteColor, IScrollingWindow { }
+```cs
+public interface IConsole : IPrintAtColor, IConsoleState, IWriteColor, IScrollingWindow 
+{ 
+    
+}
 ```
 
 <img src='docs/iconsole2.png' align='center' />
@@ -77,7 +87,7 @@ Change the foreground and background color of what will get printed with the nex
 - `ConsoleColor BackgroundColor { get; set; }`
 - `Colors Colors { get; set; }`
 
-## Colors (class, not interface!)
+## Colors (is a POCO class, and not an interface)
 
 The eagle eyed amongst you will have spotted the single class file in this contract. Being able to specify the colors for something with a single assignment makes a lot of code easier to read. 
 

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Konsole
+﻿namespace Konsole
 {
     public interface IWrite
     {

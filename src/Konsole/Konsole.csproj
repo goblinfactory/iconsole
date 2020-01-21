@@ -6,7 +6,7 @@
     <Title>IConsole</Title>
     <AssemblyName>Konsole.IConsole</AssemblyName>
     <RootNamespace>Konsole</RootNamespace>
-    <Version>0.6-alpha</Version>
+    <Version>0.7.1-alpha</Version>
     <Owners>Goblinfactory Ltd</Owners>
     <Company>Goblinfactory Ltd</Company>
     <Authors>Alan Hemmings</Authors>
@@ -21,7 +21,7 @@
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/goblinfactory/iconsole/</RepositoryUrl>
-    <PackageReleaseNotes>update.</PackageReleaseNotes>
+    <PackageReleaseNotes>update, first draft for manual testing.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <None Include="iconsole.png" Pack="true" Visible="false" PackagePath="" />
