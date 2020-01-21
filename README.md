@@ -1,6 +1,6 @@
 # IConsole
 
-## Update 21 Jan 2020
+## Update 21 Jan 2020 - Project moved to Goblinfactory.Konsole
 
 This project is no longer supported. IConsole is included in `Goblinfactory.Konsole`. Please checkout the project at [`Goblinfactory.Konsole`](https://github.com/goblinfactory/konsole).
 
